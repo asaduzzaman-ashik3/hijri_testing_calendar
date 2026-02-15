@@ -120,9 +120,8 @@ class _HijriDatePickerState extends State<HijriDatePicker> {
     return Dialog(
       backgroundColor: colorScheme.surface,
       child: SizedBox(
-        width: screenSize.width * 0.9,
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(12),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -154,7 +153,7 @@ class _HijriDatePickerState extends State<HijriDatePicker> {
             ),
             Text(
               '$startYear - ${startYear + 40}',
-              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -166,7 +165,7 @@ class _HijriDatePickerState extends State<HijriDatePicker> {
         ),
         const SizedBox(height: 12),
         SizedBox(
-          height: 338,
+          height: 342,
           child: GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 5,
@@ -209,7 +208,7 @@ class _HijriDatePickerState extends State<HijriDatePicker> {
           children: [
             TextButton(
               onPressed: _toggleYearPicker,
-              child: const Text('Cancel'),
+              child: const Text('Back'),
             ),
             const SizedBox(width: 8),
             FilledButton(
@@ -262,7 +261,6 @@ class _HijriDatePickerState extends State<HijriDatePicker> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: weekDays.map((day) => SizedBox(
-            width: 40,
             child: Center(
               child: Text(
                 day,
@@ -304,7 +302,7 @@ class _HijriDatePickerState extends State<HijriDatePicker> {
                       ..hDay = day;
                   });
                 },
-                borderRadius: BorderRadius.circular(18),
+                borderRadius: BorderRadius.circular(50),
                 child: Container(
                   margin: const EdgeInsets.all(2),
                   decoration: BoxDecoration(
