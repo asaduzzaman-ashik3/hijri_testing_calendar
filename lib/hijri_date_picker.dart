@@ -115,7 +115,6 @@ class _HijriDatePickerState extends State<HijriDatePicker> {
   Widget build(BuildContext context) {
     final daysInMonth = _getDaysInMonth();
     final colorScheme = Theme.of(context).colorScheme;
-    final screenSize = MediaQuery.of(context).size;
 
     return Dialog(
       backgroundColor: colorScheme.surface,
