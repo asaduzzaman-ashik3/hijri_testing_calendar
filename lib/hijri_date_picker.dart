@@ -166,7 +166,7 @@ class _HijriDatePickerState extends State<HijriDatePicker> {
         ),
         const SizedBox(height: 12),
         SizedBox(
-          height: 318,
+          height: 338,
           child: GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 5,
@@ -240,7 +240,7 @@ class _HijriDatePickerState extends State<HijriDatePicker> {
                 children: [
                   Text(
                     '${hijriMonths[_selectedMonth - 1]} $_selectedYear',
-                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -262,11 +262,11 @@ class _HijriDatePickerState extends State<HijriDatePicker> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: weekDays.map((day) => SizedBox(
-            width: 36,
+            width: 40,
             child: Center(
               child: Text(
                 day,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: colorScheme.onSurfaceVariant,
                   fontWeight: FontWeight.w500,
                 ),
@@ -276,12 +276,12 @@ class _HijriDatePickerState extends State<HijriDatePicker> {
         ),
         const SizedBox(height: 8),
         SizedBox(
-          height: 290,
+          height: 310,
           child: GridView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 7,
+              crossAxisCount: 6,
               childAspectRatio: 1,
             ),
             itemCount: _firstDayOfWeek + daysInMonth,
