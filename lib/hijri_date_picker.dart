@@ -18,6 +18,9 @@ const List<String> hijriMonths = [
 
 const List<String> weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
+const int minHijriYear = 1356;
+const int maxHijriYear = 1500;
+
 class HijriDatePicker extends StatefulWidget {
   final HijriCalendar initialDate;
   final Function(HijriCalendar) onDateSelected;
@@ -69,6 +72,7 @@ class _HijriDatePickerState extends State<HijriDatePicker> {
   }
 
   void _previousMonth() {
+    if (_selectedYear <= minHijriYear && _selectedMonth == 1) return;
     setState(() {
       if (_selectedMonth == 1) {
         _selectedMonth = 12;
@@ -81,6 +85,7 @@ class _HijriDatePickerState extends State<HijriDatePicker> {
   }
 
   void _nextMonth() {
+    if (_selectedYear >= maxHijriYear && _selectedMonth == 12) return;
     setState(() {
       if (_selectedMonth == 12) {
         _selectedMonth = 1;
@@ -130,7 +135,9 @@ class _HijriDatePickerState extends State<HijriDatePicker> {
 
   Widget _buildYearPicker(BuildContext context, ColorScheme colorScheme) {
     final currentYear = _selectedYear;
-    final startYear = currentYear - 20;
+    final startYear = (currentYear - 20 < minHijriYear) ? minHijriYear : currentYear - 20;
+    final canGoPrevious = startYear > minHijriYear;
+    final canGoNext = currentYear + 20 < maxHijriYear;
 
     return Column(
       children: [
@@ -139,7 +146,7 @@ class _HijriDatePickerState extends State<HijriDatePicker> {
           children: [
             IconButton(
               icon: const Icon(Icons.chevron_left),
-              onPressed: () => setState(() => _selectedYear -= 41),
+              onPressed: canGoPrevious ? () => setState(() => _selectedYear -= 41) : null,
             ),
             Text(
               '$startYear - ${startYear + 40}',
@@ -149,7 +156,7 @@ class _HijriDatePickerState extends State<HijriDatePicker> {
             ),
             IconButton(
               icon: const Icon(Icons.chevron_right),
-              onPressed: () => setState(() => _selectedYear += 41),
+              onPressed: canGoNext ? () => setState(() => _selectedYear += 41) : null,
             ),
           ],
         ),
@@ -164,6 +171,9 @@ class _HijriDatePickerState extends State<HijriDatePicker> {
             itemCount: 41,
             itemBuilder: (context, index) {
               final year = startYear + index;
+              if (year < minHijriYear || year > maxHijriYear) {
+                return const SizedBox();
+              }
               final isSelected = year == _selectedYear;
 
               return InkWell(
