@@ -115,19 +115,23 @@ class _HijriDatePickerState extends State<HijriDatePicker> {
   Widget build(BuildContext context) {
     final daysInMonth = _getDaysInMonth();
     final colorScheme = Theme.of(context).colorScheme;
+    final screenSize = MediaQuery.of(context).size;
 
     return Dialog(
       backgroundColor: colorScheme.surface,
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (_showYearPicker)
-              _buildYearPicker(context, colorScheme)
-            else
-              _buildCalendarView(context, colorScheme, daysInMonth),
-          ],
+      child: SizedBox(
+        width: screenSize.width * 0.9,
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (_showYearPicker)
+                _buildYearPicker(context, colorScheme)
+              else
+                _buildCalendarView(context, colorScheme, daysInMonth),
+            ],
+          ),
         ),
       ),
     );
@@ -160,9 +164,9 @@ class _HijriDatePickerState extends State<HijriDatePicker> {
             ),
           ],
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 12),
         SizedBox(
-          height: 200,
+          height: 318,
           child: GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 5,
@@ -269,58 +273,61 @@ class _HijriDatePickerState extends State<HijriDatePicker> {
           )).toList(),
         ),
         const SizedBox(height: 8),
-        GridView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 7,
-            childAspectRatio: 1,
-          ),
-          itemCount: _firstDayOfWeek + daysInMonth,
-          itemBuilder: (context, index) {
-            if (index < _firstDayOfWeek) {
-              return const SizedBox();
-            }
-            final day = index - _firstDayOfWeek + 1;
-            final isSelected = day == _selectedDate.hDay &&
-                _selectedMonth == _selectedDate.hMonth &&
-                _selectedYear == _selectedDate.hYear;
-            final isToday = _isToday(day);
+        SizedBox(
+          height: 290,
+          child: GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 7,
+              childAspectRatio: 1,
+            ),
+            itemCount: _firstDayOfWeek + daysInMonth,
+            itemBuilder: (context, index) {
+              if (index < _firstDayOfWeek) {
+                return const SizedBox();
+              }
+              final day = index - _firstDayOfWeek + 1;
+              final isSelected = day == _selectedDate.hDay &&
+                  _selectedMonth == _selectedDate.hMonth &&
+                  _selectedYear == _selectedDate.hYear;
+              final isToday = _isToday(day);
 
-            return InkWell(
-              onTap: () {
-                setState(() {
-                  _selectedDate = HijriCalendar()
-                    ..hYear = _selectedYear
-                    ..hMonth = _selectedMonth
-                    ..hDay = day;
-                });
-              },
-              borderRadius: BorderRadius.circular(20),
-              child: Container(
-                margin: const EdgeInsets.all(2),
-                decoration: BoxDecoration(
-                  color: isSelected ? colorScheme.primary : null,
-                  shape: BoxShape.circle,
-                ),
-                child: Center(
-                  child: Text(
-                    '$day',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: isSelected 
-                          ? colorScheme.onPrimary 
-                          : colorScheme.onSurface,
-                      fontWeight: isSelected || isToday ? FontWeight.bold : null,
-                      decoration: isToday && !isSelected 
-                          ? TextDecoration.underline 
-                          : null,
-                      decorationColor: colorScheme.primary,
+              return InkWell(
+                onTap: () {
+                  setState(() {
+                    _selectedDate = HijriCalendar()
+                      ..hYear = _selectedYear
+                      ..hMonth = _selectedMonth
+                      ..hDay = day;
+                  });
+                },
+                borderRadius: BorderRadius.circular(18),
+                child: Container(
+                  margin: const EdgeInsets.all(2),
+                  decoration: BoxDecoration(
+                    color: isSelected ? colorScheme.primary : null,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Center(
+                    child: Text(
+                      '$day',
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: isSelected
+                            ? colorScheme.onPrimary
+                            : colorScheme.onSurface,
+                        fontWeight: isSelected || isToday ? FontWeight.bold : null,
+                        decoration: isToday && !isSelected
+                            ? TextDecoration.underline
+                            : null,
+                        decorationColor: colorScheme.primary,
+                      ),
                     ),
                   ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
         const SizedBox(height: 16),
         Row(
