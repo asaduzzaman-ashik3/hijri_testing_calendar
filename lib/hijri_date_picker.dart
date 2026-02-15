@@ -154,7 +154,7 @@ class _HijriDatePickerState extends State<HijriDatePicker> {
             ),
             Text(
               '$startYear - ${startYear + 40}',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -235,16 +235,18 @@ class _HijriDatePickerState extends State<HijriDatePicker> {
             GestureDetector(
               onTap: _toggleYearPicker,
               child: Row(
+                spacing: 5,
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
                     '${hijriMonths[_selectedMonth - 1]} $_selectedYear',
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Icon(
-                    Icons.arrow_drop_down,
+                    Icons.keyboard_arrow_down,
+                    size: 18,
                     color: colorScheme.primary,
                   ),
                 ],
