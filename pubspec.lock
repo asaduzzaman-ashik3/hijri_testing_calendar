@@ -75,14 +75,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  hijri:
+  hijri_calendar:
     dependency: "direct main"
     description:
-      name: hijri
-      sha256: "203eb7341e32789af6429877e88411b1526ef44c5d157ce4d3b930dd32c37ef1"
+      name: hijri_calendar
+      sha256: "5b99f8924b738cb7156fff2c679a261cecf4214c324f2529255afb3a9ccfea58"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.0"
+    version: "1.0.7+7"
   leak_tracker:
     dependency: transitive
     description:

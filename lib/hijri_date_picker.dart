@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hijri/hijri_calendar.dart';
+import 'package:hijri_calendar/hijri_calendar.dart';
 
 const List<String> hijriMonths = [
   'Muharram',
@@ -22,8 +22,8 @@ const int minHijriYear = 1356;
 const int maxHijriYear = 1500;
 
 class HijriDatePicker extends StatefulWidget {
-  final HijriCalendar initialDate;
-  final Function(HijriCalendar) onDateSelected;
+  final HijriCalendarConfig initialDate;
+  final Function(HijriCalendarConfig) onDateSelected;
 
   const HijriDatePicker({
     super.key,
@@ -31,15 +31,15 @@ class HijriDatePicker extends StatefulWidget {
     required this.onDateSelected,
   });
 
-  static Future<HijriCalendar?> show({
+  static Future<HijriCalendarConfig?> show({
     required BuildContext context,
-    HijriCalendar? initialDate,
+    HijriCalendarConfig? initialDate,
   }) async {
-    return await showDialog<HijriCalendar>(
+    return await showDialog<HijriCalendarConfig>(
       context: context,
       builder: (BuildContext context) {
         return HijriDatePicker(
-          initialDate: initialDate ?? HijriCalendar.now(),
+          initialDate: initialDate ?? HijriCalendarConfig.now(),
           onDateSelected: (date) {},
         );
       },
@@ -51,7 +51,7 @@ class HijriDatePicker extends StatefulWidget {
 }
 
 class _HijriDatePickerState extends State<HijriDatePicker> {
-  late HijriCalendar _selectedDate;
+  late HijriCalendarConfig _selectedDate;
   late int _selectedYear;
   late int _selectedMonth;
   late int _firstDayOfWeek;
@@ -67,7 +67,7 @@ class _HijriDatePickerState extends State<HijriDatePicker> {
   }
 
   void _updateFirstDayOfWeek() {
-    final firstGreg = HijriCalendar().hijriToGregorian(_selectedYear, _selectedMonth, 1);
+    final firstGreg = HijriCalendarConfig().hijriToGregorian(_selectedYear, _selectedMonth, 1);
     _firstDayOfWeek = firstGreg.weekday % 7;
   }
 
@@ -296,7 +296,7 @@ class _HijriDatePickerState extends State<HijriDatePicker> {
               return InkWell(
                 onTap: () {
                   setState(() {
-                    _selectedDate = HijriCalendar()
+                    _selectedDate = HijriCalendarConfig()
                       ..hYear = _selectedYear
                       ..hMonth = _selectedMonth
                       ..hDay = day;
@@ -352,14 +352,14 @@ class _HijriDatePickerState extends State<HijriDatePicker> {
   }
 
   bool _isToday(int day) {
-    final today = HijriCalendar.now();
+    final today = HijriCalendarConfig.now();
     return day == today.hDay &&
         _selectedMonth == today.hMonth &&
         _selectedYear == today.hYear;
   }
 
   int _getDaysInMonth() {
-    final temp = HijriCalendar()
+    final temp = HijriCalendarConfig()
       ..hYear = _selectedYear
       ..hMonth = _selectedMonth
       ..hDay = 1;

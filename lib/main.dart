@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hijri/hijri_calendar.dart';
+import 'package:hijri_calendar/hijri_calendar.dart';
 import 'hijri_date_picker.dart';
 
 enum CalendarType { gregorian, hijri }
@@ -14,13 +14,13 @@ class CalendarSelector extends StatefulWidget {
 class _CalendarSelectorState extends State<CalendarSelector> {
   CalendarType _selectedCalendarType = CalendarType.gregorian;
   DateTime _selectedGregorianDate = DateTime.now();
-  HijriCalendar _selectedHijriDate = HijriCalendar.now();
+  HijriCalendarConfig _selectedHijriDate = HijriCalendarConfig.now();
 
   String _formatGregorianDate(DateTime date) {
     return '${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}/${date.year}';
   }
 
-  String _formatHijriDate(HijriCalendar date) {
+  String _formatHijriDate(HijriCalendarConfig date) {
     final monthName = hijriMonths[date.hMonth - 1];
     return '${date.hDay} $monthName ${date.hYear}';
   }
@@ -36,18 +36,18 @@ class _CalendarSelectorState extends State<CalendarSelector> {
       if (picked != null) {
         setState(() {
           _selectedGregorianDate = picked;
-          _selectedHijriDate = HijriCalendar.fromDate(picked);
+          _selectedHijriDate = HijriCalendarConfig.bridgeFromDate(picked);
         });
       }
     } else {
-      final HijriCalendar? picked = await HijriDatePicker.show(
+      final HijriCalendarConfig? picked = await HijriDatePicker.show(
         context: context,
         initialDate: _selectedHijriDate,
       );
       if (picked != null) {
         setState(() {
           _selectedHijriDate = picked;
-          _selectedGregorianDate = HijriCalendar().hijriToGregorian(
+          _selectedGregorianDate = HijriCalendarConfig().hijriToGregorian(
             picked.hYear,
             picked.hMonth,
             picked.hDay,
@@ -139,7 +139,7 @@ class _CalendarSelectorState extends State<CalendarSelector> {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'Hijri: ${_formatHijriDate(HijriCalendar.fromDate(_selectedGregorianDate))}',
+                    'Hijri: ${_formatHijriDate(HijriCalendarConfig.bridgeFromDate(_selectedGregorianDate))}',
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ],
