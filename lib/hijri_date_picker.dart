@@ -170,7 +170,7 @@ class _HijriDatePickerState extends State<HijriDatePicker> {
           child: GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 5,
-              childAspectRatio: 1.5,
+              childAspectRatio: 1.6,
             ),
             itemCount: 41,
             itemBuilder: (context, index) {
